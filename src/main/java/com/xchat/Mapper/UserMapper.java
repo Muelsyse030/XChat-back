@@ -2,6 +2,7 @@ package com.xchat.Mapper;
 
 import com.xchat.Entity.User;
 import org.apache.ibatis.annotations.*;
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -14,4 +15,7 @@ public interface UserMapper {
 
     @Select("SELECT * FROM user WHERE id = #{id}")
     User findById(Long id);
+
+    @Select("SELECT id, email, nickname, avatar FROM user")
+    List<User> findAll();
 }

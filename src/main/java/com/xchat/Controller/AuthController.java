@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List; // 记得导入 List
 
 @RestController
 @RequestMapping("/api")
@@ -35,11 +36,20 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Map<String, Object>HZregister(@RequestBody User user) {
+    public Map<String, Object> HZregister(@RequestBody User user) {
         userMapper.insert(user);
         Map<String, Object> result = new HashMap<>();
         result.put("code", 200);
         result.put("msg", "注册成功");
+        return result;
+    }
+
+    @GetMapping("/contacts")
+    public Map<String, Object> getContacts() {
+        List<User> users = userMapper.findAll();
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 200);
+        result.put("data", users);
         return result;
     }
 }
