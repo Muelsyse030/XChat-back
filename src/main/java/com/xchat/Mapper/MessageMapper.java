@@ -1,6 +1,6 @@
-package Mapper;
+package com.xchat.Mapper;
 
-import Entity.Message;
+import com.xchat.Entity.Message;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 

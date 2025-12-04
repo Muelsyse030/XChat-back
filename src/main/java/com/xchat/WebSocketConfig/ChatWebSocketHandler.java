@@ -1,4 +1,4 @@
-package WebSocketConfig;
+package com.xchat.WebSocketConfig;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;

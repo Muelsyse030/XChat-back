@@ -1,4 +1,4 @@
-package Entity;
+package com.xchat.Entity;
 
 import lombok.Data;
 import java.time.LocalDateTime;

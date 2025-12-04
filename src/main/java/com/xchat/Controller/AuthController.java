@@ -1,7 +1,7 @@
-package com.XChat-back.controller;
+package com.xchat.Controller;
 
-import com.xchat-back.entity.User;
-import com.xchat-back.mapper.UserMapper;
+import com.xchat.Entity.User;       // 修正导入路径
+import com.xchat.Mapper.UserMapper; // 修正导入路径
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
