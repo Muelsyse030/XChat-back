@@ -88,4 +88,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private String getUserIdFromSession(WebSocketSession session) {
         return getUserIdFromToken(session.getUri().getQuery());
     }
+
+    public static boolean isUserOnline(String userId) {
+        return userSessions.containsKey(userId);
+    }
 }

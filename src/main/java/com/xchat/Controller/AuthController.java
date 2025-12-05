@@ -4,6 +4,9 @@ import com.xchat.Entity.User;       // 修正导入路径
 import com.xchat.Mapper.UserMapper; // 修正导入路径
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.xchat.WebSocketConfig.ChatWebSocketHandler; // 1. 引入Handler
+import java.util.stream.Collectors; // 2. 引入流处理
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,9 +50,26 @@ public class AuthController {
     @GetMapping("/contacts")
     public Map<String, Object> getContacts() {
         List<User> users = userMapper.findAll();
+
+        // 3. 转换列表：将 User 对象转为 Map，并手动添加 online 状态
+        List<Map<String, Object>> usersWithStatus = users.stream().map(user -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", user.getId());
+            map.put("email", user.getEmail());
+            map.put("nickname", user.getNickname());
+            map.put("avatar", user.getAvatar());
+            map.put("bio", user.getBio()); // 如果你上一轮没加bio字段，这行请删掉
+
+            // 核心逻辑：调用 WebSocketHandler 判断是否在线
+            boolean isOnline = ChatWebSocketHandler.isUserOnline(String.valueOf(user.getId()));
+            map.put("online", isOnline);
+
+            return map;
+        }).collect(Collectors.toList());
+
         Map<String, Object> result = new HashMap<>();
         result.put("code", 200);
-        result.put("data", users);
+        result.put("data", usersWithStatus);
         return result;
     }
 }
