@@ -16,6 +16,9 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE id = #{id}")
     User findById(Long id);
 
-    @Select("SELECT id, email, nickname, avatar FROM user")
+    @Select("SELECT id, email, nickname, avatar , bio FROM user")
     List<User> findAll();
+
+    @Update("UPDATE user SET nickname = #{nickname}, bio = #{bio}, avatar = #{avatar}, email = #{email} WHERE id = #{id}")
+    void update(User user);
 }
