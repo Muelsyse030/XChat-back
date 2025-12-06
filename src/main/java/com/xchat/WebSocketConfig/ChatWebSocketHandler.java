@@ -9,6 +9,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -64,10 +66,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         // 3. 转发消息给接收者
         WebSocketSession receiverSession = userSessions.get(receiverIdStr);
         if (receiverSession != null && receiverSession.isOpen()) {
-            Map<String, Object> response = Map.of(
-                    "content", content,
-                    "senderId", senderIdStr
-            );
+
+            Map<String, Object> response = new HashMap<>(); // 改用 HashMap 方便put
+            response.put("content", content);
+            response.put("senderId", senderIdStr);
+            // 【新增】加上当前时间，方便前端展示
+            response.put("createdAt", LocalDateTime.now().toString());
             receiverSession.sendMessage(new TextMessage(objectMapper.writeValueAsString(response)));
         }
     }
